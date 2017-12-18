@@ -1,0 +1,8 @@
+<view class="classname">123</view>
+
+<view class="bottom-nav btn-area">
+  <navigator class="bottom-nav-item" url="/pages/index/index" open-type="redirect">首页</navigator>
+  <navigator class="bottom-nav-item" url="/pages/defence/defence" open-type="redirect">防治</navigator>
+  <navigator class="bottom-nav-item" url="/pages/supervisor/supervisor" open-type="redirect">监理</navigator>
+  <navigator class="bottom-nav-item" url="/pages/monitor/monitor" open-type="redirect">监测</navigator>
+</view>

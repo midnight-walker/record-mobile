@@ -1,0 +1,6 @@
+<template name="footer">
+  <view class="bottom-nav btn-area">
+    <navigator class="bottom-nav-item bottom-first" url="/pages/index/index" open-type="reLaunch">首页</navigator>
+    <navigator class="bottom-nav-item" url="/pages/businessList/businessList" open-type="reLaunch">业务</navigator>
+  </view>
+</template>

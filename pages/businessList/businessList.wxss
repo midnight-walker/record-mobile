@@ -1,0 +1,19 @@
+.container{
+  padding: 10px;
+}
+.section{
+  width: 100%;
+}
+.section_title{
+  width: 100%;
+  text-align: left;
+}
+.flex-wrap{
+  margin: 10px 0;
+}
+.flex-item{
+  margin: 10px 0;
+}
+.detail{
+  font-size: 12px;
+}

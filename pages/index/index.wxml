@@ -1,0 +1,20 @@
+<view wx:if="{{authed===1}}" class="container">
+  <view  bindtap="bindViewTap" class="userinfo">
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </view>
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+  </view>
+  <view class="test"></view>
+  
+
+  <import src="../../widget/footer.wxml"/>
+  <template is="footer"/>
+</view>
+<view wx:if="{{authed===2}}" class="container">
+  你的微信号未经过验证，请联系管理员添加权限
+</view>
+<view wx:if="{{authed===0}}" class="container">
+  正在验证权限，请稍后
+</view>

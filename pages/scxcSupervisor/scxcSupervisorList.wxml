@@ -1,0 +1,27 @@
+<view class="list-wrap">
+  <view class="list-box" wx:for="{{list}}" wx:key="id">
+    <view bindtap='viewDetail' data-index="{{index}}">
+      <view class='line'>
+        提交时间：{{item.createTime}}
+      </view>
+      <view class='line'>
+        <span>区县：{{item.regionName}}</span>
+        <span>乡镇林场：{{item.stationName}}</span>
+      </view>
+      <view class='line'>
+        <span>村名：{{item.village}}</span>
+        <span>林班号：{{item.group}}</span>
+      </view>
+      <view class='line'>
+        <span>小地名：{{item.placeName}}</span>
+        <span>小班面积：{{item.smallClassArea}}</span>
+      </view>
+      <view class='line'>
+        <span>树种组成：{{item.treeCompose}}</span>
+        <span>防治对象：{{item.targetName}}</span>
+      </view>
+    </view>
+  </view>
+</view>
+<import src="../../widget/footer.wxml" />
+<template is="footer" />

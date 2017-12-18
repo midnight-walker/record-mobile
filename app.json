@@ -1,0 +1,19 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/error/notAuth",
+    "pages/defence/defence",
+    "pages/monitor/monitor",
+    "pages/supervisor/supervisor",
+    "pages/businessList/businessList",
+    "pages/scxcSupervisor/scxcSupervisor",
+    "pages/scxcSupervisor/scxcSupervisorList"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"black"
+  }
+}

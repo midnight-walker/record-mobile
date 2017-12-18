@@ -1,0 +1,88 @@
+view{
+  font-size: 12px;
+}
+.container{
+  padding:20px 0 80px;
+}
+.main-form{
+  width: 100%
+}
+.section{
+  line-height: 40px;
+  position: relative;
+  height: 40px;
+}
+.section .icon{
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #666;
+  color: #666;
+  font-size: 20px;
+  top:9px;
+  text-align: center;
+  line-height: 20px;
+  border-radius: 12px;
+}
+.section .icon-up{
+  right: 60px;
+}
+.section .icon-down{
+  right: 20px;
+}
+.section__title,picker,input{
+  display: inline-block;
+  vertical-align: middle;
+}
+.section__title{
+  margin-right: 15px;
+  font-size: 12px;
+  width: 350rpx;
+  text-align: right;
+}
+input{
+  height: 24px;
+  line-height: 24px;
+  border: 1px solid #666;
+  padding: 0 5px;
+  min-height: 24px;
+  width:100rpx;
+}
+
+
+.scsx-bottom-nav{
+  position: fixed;
+  bottom: 40px;
+  height: 40px;
+  z-index: 100;
+  background: #fff;
+  width: 100%;
+  border-top:1px solid #eee;
+}
+
+.scsx-bottom-nav-item{
+  width: 20%;
+  font-size: 12px;
+  display: inline-block;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  box-sizing: border-box;
+  border-left: 1px solid #eee;
+}
+
+.scsx-bottom-first{
+  border: none;
+}
+.scsx-bottom-nav-item.curr{
+  background: #09bb07;
+  color: #fff;
+}
+.btn-area button{
+  background: #09bb07;
+  margin: 10px;
+  color: #fff;
+}
+.btn-area .reset{
+  background: #e94f4f;
+}

@@ -1,0 +1,28 @@
+<view class="container">
+  <view class="section">
+    <view class="section_title">监理</view>
+    <view class="flex-wrap">
+      <navigator class="detail" url="/pages/scxcSupervisor/scxcSupervisor" open-type="navigate">松材线虫病除治质量监理</navigator>
+    </view>
+    <view class="flex-wrap">
+      <navigator class="detail" url="/pages/scxcSupervisor/scxcSupervisorList" open-type="navigate">我的提交记录</navigator>
+    </view>
+  </view>
+  <view class="section">
+    <view class="section_title">监测</view>
+    <view class="flex-wrap">
+      <view class="detail">监测（暂未开放）</view>
+    </view>
+  </view>
+  <view class="section">
+    <view class="section_title">防治</view>
+    <view class="flex-wrap">
+      <view class="detail">防治（暂未开放）</view>
+    </view>
+  </view>
+  <view class="section_title"></view>
+</view>
+
+
+  <import src="../../widget/footer.wxml"/>
+  <template is="footer"/>

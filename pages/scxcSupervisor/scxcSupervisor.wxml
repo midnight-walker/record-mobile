@@ -1,0 +1,318 @@
+<view class="container">
+  <form class="main-form" bindsubmit="formSubmit" bindreset="formReset">
+    <view hidden="{{showPage!==1}}">
+      <view class="section">
+        <view class="section__title">区县名称：</view>
+        <picker bindchange="chooseRegion" value="{{postData.region}}" range="{{region}}" range-key="name">
+          <view class="picker">
+            {{region[postData.region].name}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="section">
+        <view class="section__title">乡镇（林场）名称：</view>
+        <picker bindchange="chooseStation" value="{{postData.station}}" range="{{station}}" range-key="name">
+          <view class="picker">
+            {{station[postData.station].name}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="section">
+        <view class="section__title">村（管护站）名:</view>
+        <input bindblur="villageChange" value="{{postData.village}}" placeholder="" />
+      </view>
+
+      <view class="section">
+        <view class="section__title">组（社、林班）号:</view>
+        <input bindblur="groupChange" value="{{postData.group}}" placeholder="" />
+      </view>
+
+      <view class="section">
+        <view class="section__title">小班号:</view>
+        <input bindblur="smallClassChange" value="{{postData.smallClass}}" placeholder="" />
+      </view>
+
+      <view class="section">
+        <view class="section__title">小地名:</view>
+        <input bindblur="placeNameChange" value="{{postData.placeName}}" placeholder="" />
+      </view>
+
+      <view class="section">
+        <view class="section__title">小班面积（亩）:</view>
+        <input bindblur="smallClassAreaChange" value="{{postData.smallClassArea}}" placeholder="" />
+      </view>
+
+      <view class="section">
+        <view class="section__title">树种组成:</view>
+        <input bindblur="treeComposeChange" value="{{postData.treeCompose}}" placeholder="" />
+      </view>
+
+      <view class="section">
+        <view class="section__title">监测对象名称:</view>
+        <input bindblur="targetNameChange" value="{{postData.targetName}}" placeholder="" />
+      </view>
+
+      <view class="section">
+        <view class="section__title">监测时间:</view>
+        <picker mode="date" value="{{time}}" bindblur="timeChange" value="{{postData.time}}" bindchange="bindDateChange">
+          <view class="picker">
+            {{time}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="section">
+        <view class="section__title">施工作业单位名称:</view>
+        <input bindblur="workGroupChange" value="{{postData.workGroup}}" placeholder="" />
+      </view>
+
+      <view class="uploaded">
+        <image wx:for="{{showImage}}" wx:key="imageSrc" style="width: 350rpx;height:350rpx;margin-left:25rpx;" mode="aspectFill" src="{{item.imageSrc}}"></image>
+      </view>
+
+      <view wx-if="{{!isEdit}}" class="image-upload">
+        <view class="image-plus image-plus-nb" bindtap="chooseImage">
+          <view class="image-plus-horizontal"></view>
+          <view class="image-plus-vertical"></view>
+        </view>
+        <view class="image-plus-text">选择图片</view>
+      </view>
+    </view>
+
+    <view hidden="{{showPage!==2}}">
+      <view class="section">
+        <view class="section__title">显眼枯死松树:</view>
+        <input bindblur="fcXianyanChange" value="{{postData.fcXianyan}}" type="number" placeholder="" />
+        <view bindtap="fcXianyanUp" class="icon icon-up">+</view>
+        <view bindtap="fcXianyanDown" class="icon icon-down">-</view>
+      </view>
+
+      <view class="section">
+        <view class="section__title">细小枯死松树:</view>
+        <input bindblur="fcXixiaoChange" value="{{postData.fcXixiao}}" type="number" placeholder="" />
+        <view bindtap="fcXixiaoUp" class="icon icon-up">+</view>
+        <view bindtap="fcXixiaoDown" class="icon icon-down">-</view>
+      </view>
+
+      <view class="section">
+        <view class="section__title">高度5厘米以上的树桩:</view>
+        <input bindblur="fcGaodudayuwuChange" value="{{postData.fcGaodudayuwu}}" type="number" placeholder="" />
+        <view bindtap="fcGaodudayuwuUp" class="icon icon-up">+</view>
+        <view bindtap="fcGaodudayuwuDown" class="icon icon-down">-</view>
+      </view>
+
+      <view class="section">
+        <view class="section__title">藤蔓或活树连着枯死树:</view>
+        <input bindblur="fcChanzheChange" value="{{postData.fcChanzhe}}" type="number" placeholder="" />
+        <view bindtap="fcChanzheUp" class="icon icon-up">+</view>
+        <view bindtap="fcChanzheDown" class="icon icon-down">-</view>
+      </view>
+
+      <view class="section">
+        <view class="section__title">藤蔓覆盖的枯死松树:</view>
+        <input bindblur="fcFugaiChange" value="{{postData.fcFugai}}" type="number" placeholder="" />
+        <view bindtap="fcFugaiUp" class="icon icon-up">+</view>
+        <view bindtap="fcFugaiDown" class="icon icon-down">-</view>
+      </view>
+
+      <view class="section">
+        <view class="section__title">风折风倒的枯死松树:</view>
+        <input bindblur="fcFengzheChange" value="{{postData.fcFengzhe}}" type="number" placeholder="" />
+        <view bindtap="fcFengzheUp" class="icon icon-up">+</view>
+        <view bindtap="fcFengzheDown" class="icon icon-down">-</view>
+      </view>
+
+      <view class="section">
+        <view class="section__title">火烧、雷击枯死松树:</view>
+        <input bindblur="fcHuoshaoChange" value="{{postData.fcHuoshao}}" type="number" placeholder="" />
+        <view bindtap="fcHuoshaoUp" class="icon icon-up">+</view>
+        <view bindtap="fcHuoshaoDown" class="icon icon-down">-</view>
+      </view>
+
+      <view class="section">
+        <view class="section__title">悬崖边枯死松树:</view>
+        <input bindblur="fcXuanyaChange" value="{{postData.fcXuanya}}" type="number" placeholder="" />
+        <view bindtap="fcXuanyaUp" class="icon icon-up">+</view>
+        <view bindtap="fcXuanyaDown" class="icon icon-down">-</view>
+      </view>
+
+      <view class="section">
+        <view class="section__title">悬挂或地面的松树梢头:</view>
+        <input bindblur="fcXuanguaChange" value="{{postData.fcXuangua}}" type="number" placeholder="" />
+        <view bindtap="fcXuanguaUp" class="icon icon-up">+</view>
+        <view bindtap="fcXuanguaDown" class="icon icon-down">-</view>
+      </view>
+
+      <view class="section">
+        <view class="section__title">活松树上枯死树枝:</view>
+        <input bindblur="fcHuoshukuzhiChange" value="{{postData.fcHuoshukuzhi}}" type="number" placeholder="" />
+        <view bindtap="fcHuoshukuzhiUp" class="icon icon-up">+</view>
+        <view bindtap="fcHuoshukuzhiDown" class="icon icon-down">-</view>
+      </view>
+
+    </view>
+
+    <view hidden="{{showPage!==3}}">
+
+      <view class="section">
+        <view class="section__title">风折风倒的枯死松树:</view>
+        <input bindblur="jcFcFengzheChange" value="{{postData.jcFcFengzhe}}" type="number" placeholder="" />
+        <view bindtap="jcFcFengzheUp" class="icon icon-up">+</view>
+        <view bindtap="jcFcFengzheDown" class="icon icon-down">-</view>
+      </view>
+
+      <view class="section">
+        <view class="section__title">松树:</view>
+        <input bindblur="jcFcSongshuChange" value="{{postData.jcFcSongshu}}" type="number" placeholder="" />
+        <view bindtap="jcFcSongshuUp" class="icon icon-up">+</view>
+        <view bindtap="jcFcSongshuDown" class="icon icon-down">-</view>
+      </view>
+
+      <view class="section">
+        <view class="section__title">松木段:</view>
+        <input bindblur="jcFcSongmuChange" value="{{postData.jcFcSongmu}}" type="number" placeholder="" />
+        <view bindtap="jcFcSongmuUp" class="icon icon-up">+</view>
+        <view bindtap="jcFcSongmuDown" class="icon icon-down">-</view>
+      </view>
+
+      <view class="section">
+        <view class="section__title">地上粗1厘米以上松枝:</view>
+        <input bindblur="jcFcSongzhiChange" value="{{postData.jcFcSongzhi}}" type="number" placeholder="" />
+        <view bindtap="jcFcSongzhiUp" class="icon icon-up">+</view>
+        <view bindtap="jcFcSongzhiDown" class="icon icon-down">-</view>
+      </view>
+
+      <view class="section">
+        <view class="section__title">松树梢头:</view>
+        <input bindblur="jcFcShaotouChange" value="{{postData.jcFcShaotou}}" type="number" placeholder="" />
+        <view bindtap="jcFcShaotouUp" class="icon icon-up">+</view>
+        <view bindtap="jcFcShaotouDown" class="icon icon-down">-</view>
+      </view>
+
+
+      <view class="section">
+        <view class="section__title">用草覆盖:</view>
+        <input bindblur="jcYcCaogaiChange" value="{{postData.jcYcCaogai}}" type="number" placeholder="" />
+        <view bindtap="jcYcCaogaiUp" class="icon icon-up">+</view>
+        <view bindtap="jcYcCaogaiDown" class="icon icon-down">-</view>
+      </view>
+      <view class="section">
+        <view class="section__title">用枯枝落叶覆盖:</view>
+        <input bindblur="jcYcKuyeChange" value="{{postData.jcYcKuye}}" type="number" placeholder="" />
+        <view bindtap="jcYcKuyeUp" class="icon icon-up">+</view>
+        <view bindtap="jcYcKuyeDown" class="icon icon-down">-</view>
+      </view>
+      <view class="section">
+        <view class="section__title">用土壤覆盖:</view>
+        <input bindblur="jcYcTurangChange" value="{{postData.jcYcTurang}}" type="number" placeholder="" />
+        <view bindtap="jcYcTurangUp" class="icon icon-up">+</view>
+        <view bindtap="jcYcTurangDown" class="icon icon-down">-</view>
+      </view>
+      <view class="section">
+        <view class="section__title">用藤蔓覆盖的松材:</view>
+        <input bindblur="jcYcTengmanChange" value="{{postData.jcYcTengman}}" type="number" placeholder="" />
+        <view bindtap="jcYcTengmanUp" class="icon icon-up">+</view>
+        <view bindtap="jcYcTengmanDown" class="icon icon-down">-</view>
+      </view>
+      <view class="section">
+        <view class="section__title">隐藏于地沟:</view>
+        <input bindblur="jcYcDigouChange" value="{{postData.jcYcDigou}}" type="number" placeholder="" />
+        <view bindtap="jcYcDigouUp" class="icon icon-up">+</view>
+        <view bindtap="jcYcDigouDown" class="icon icon-down">-</view>
+      </view>
+      <view class="section">
+        <view class="section__title">洞穴中的松材:</view>
+        <input bindblur="jcYcDongxueChange" value="{{postData.jcYcDongxue}}" type="number" placeholder="" />
+        <view bindtap="jcYcDongxueUp" class="icon icon-up">+</view>
+        <view bindtap="jcYcDongxueDown" class="icon icon-down">-</view>
+      </view>
+    </view>
+
+    <view hidden="{{showPage!==4}}">
+      <view class="section">
+        <view class="section__title">未完全炭化的松枝:</view>
+        <input bindblur="fsSongzhiChange" value="{{postData.fsSongzhi}}" type="number" placeholder="" />
+        <view bindtap="fsSongzhiUp" class="icon icon-up">+</view>
+        <view bindtap="fsSongzhiDown" class="icon icon-down">-</view>
+      </view>
+      <view class="section">
+        <view class="section__title">未完全炭化的松木:</view>
+        <input bindblur="fsSongmuChange" value="{{postData.fsSongmu}}" type="number" placeholder="" />
+        <view bindtap="fsSongmuUp" class="icon icon-up">+</view>
+        <view bindtap="fsSongmuDown" class="icon icon-down">-</view>
+      </view>
+
+      <view class="section">
+        <view class="section__title">未点火的松材堆:</view>
+        <input bindblur="fsSongcaiChange" value="{{postData.fsSongcai}}" type="number" placeholder="" />
+        <view bindtap="fsSongcaiUp" class="icon icon-up">+</view>
+        <view bindtap="fsSongcaiDown" class="icon icon-down">-</view>
+      </view>
+    </view>
+
+    <view hidden="{{showPage!==5}}">
+      <view class="section">
+        <view class="section__title">伐桩高度5厘米以下:</view>
+        <input bindblur="fzFazhuangChange" value="{{postData.fzFazhuang}}" type="number" placeholder="" />
+        <view bindtap="fzFazhuangUp" class="icon icon-up">+</view>
+        <view bindtap="fzFazhuangDown" class="icon icon-down">-</view>
+      </view>
+      <view class="section">
+        <view class="section__title">伐桩剥皮:</view>
+        <input bindblur="fzBopiChange" value="{{postData.fzBopi}}" type="number" placeholder="" />
+        <view bindtap="fzBopiUp" class="icon icon-up">+</view>
+        <view bindtap="fzBopiDown" class="icon icon-down">-</view>
+      </view>
+      <view class="section">
+        <view class="section__title">在横断面上砍“+字”口:</view>
+        <input bindblur="fzJiahaoChange" value="{{postData.fzJiahao}}" type="number" placeholder="" />
+        <view bindtap="fzJiahaoUp" class="icon icon-up">+</view>
+        <view bindtap="fzJiahaoDown" class="icon icon-down">-</view>
+      </view>
+      <view class="section">
+        <view class="section__title">投药:</view>
+        <input bindblur="fzTouyaoChange" value="{{postData.fzTouyao}}" type="number" placeholder="" />
+        <view bindtap="fzTouyaoUp" class="icon icon-up">+</view>
+        <view bindtap="fzTouyaoDown" class="icon icon-down">-</view>
+      </view>
+      <view class="section">
+        <view class="section__title">覆盖塑料布:</view>
+        <input bindblur="fzShuliaoChange" value="{{postData.fzShuliao}}" type="number" placeholder="" />
+        <view bindtap="fzShuliaoUp" class="icon icon-up">+</view>
+        <view bindtap="fzShuliaoDown" class="icon icon-down">-</view>
+      </view>
+      <view class="section">
+        <view class="section__title">覆盖泥土厚度2厘以上:</view>
+        <input bindblur="fzNituChange" value="{{postData.fzNitu}}" type="number" placeholder="" />
+        <view bindtap="fzNituUp" class="icon icon-up">+</view>
+        <view bindtap="fzNituDown" class="icon icon-down">-</view>
+      </view>
+      <view class="section">
+        <view class="section__title">伐桩个数:</view>
+        <input bindblur="fzNumberChange" value="{{postData.fzNumber}}" type="number" placeholder="" />
+        <view bindtap="fzNumberUp" class="icon icon-up">+</view>
+        <view bindtap="fzNumberDown" class="icon icon-down">-</view>
+      </view>
+    </view>
+
+
+
+    <view wx-if="{{!isEdit}}" class="btn-area">
+      <button formType="submit">提交</button>
+      <button class="reset" bindtap='resetForm'>重置</button>
+    </view>
+  </form>
+
+  <view class="scsx-bottom-nav">
+    <view bindtap='switchPage1' class="scsx-bottom-nav-item scsx-bottom-first {{showPage==1?'curr':''}}">基础</view>
+    <view bindtap='switchPage2' class="scsx-bottom-nav-item {{showPage==2?'curr':''}}">伐除</view>
+    <view bindtap='switchPage5' class="scsx-bottom-nav-item {{showPage==5?'curr':''}}">伐桩</view>
+    <view bindtap='switchPage3' class="scsx-bottom-nav-item {{showPage==3?'curr':''}}">集材</view>
+    <view bindtap='switchPage4' class="scsx-bottom-nav-item {{showPage==4?'curr':''}}">焚烧</view>
+  </view>
+</view>
+
+<import src="../../widget/footer.wxml" />
+<template is="footer" />

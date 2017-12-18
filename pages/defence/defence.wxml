@@ -1,0 +1,129 @@
+<view class="container">
+  <form class="main-form" bindsubmit="formSubmit" bindreset="formReset">
+    <view class="section">
+      <view class="section__title">区县名称：</view>
+      <picker bindchange="bindPickerChange" value="{{regionIndex}}" range="{{region}}" range-key="name">
+        <view class="picker">
+          {{region[regionIndex].name}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="section">
+      <view class="section__title">乡镇（林场）名称：</view>
+      <picker bindchange="bindPickerChange" value="{{regionIndex}}" range="{{region}}" range-key="name">
+        <view class="picker">
+          {{region[regionIndex].name}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="section">
+      <view class="section__title">村（管护站）名:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">组（社、林班）号:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">小班号:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">小地名:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">小班面积（亩）:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">树种组成:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">监测对象名称:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">监测时间:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">发生程度:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">危害程度:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">枯死树名称:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">枯死树株数:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">火烧木株数:</view>
+      <input name="input" placeholder="" />
+    </view>
+    
+    <view class="section">
+      <view class="section__title">风折木株数:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">风倒木株数:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">滑坡致倒树株数:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">有虫株率（%）:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">平均虫口密度(株/头):</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">感病指数:</view>
+      <input name="input" placeholder="" />
+    </view>
+
+    <view class="section">
+      <view class="section__title">监测员:</view>
+      <input name="input" placeholder="" />
+    </view>
+    
+    <view class="btn-area">
+      <button formType="submit">Submit</button>
+      <button formType="reset">Reset</button>
+    </view>
+  </form>
+</view>
+
+<import src="../../widget/footer.wxml"/>
+  <template is="footer"/>
