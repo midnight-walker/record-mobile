@@ -10,6 +10,9 @@ page{
   padding: 20px 0 40px;
   box-sizing: border-box;
 } 
+.body-contener{
+  padding: 20px 0 40px;
+}
 
 .bottom-nav{
   position: fixed;
@@ -80,4 +83,54 @@ page{
 }
 .image-plus-nb{
   margin:0 auto;
+}
+
+
+
+.supervisor-list-wrap{
+  padding-bottom: 40px;
+}
+.supervisor-list-box{
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid red;
+  background: #eee;
+  font-size:12px;
+  position: relative;
+}
+.supervisor-list-box.active{
+  border: 1px solid #09bb07;
+}
+.supervisor-list-box .close{
+  position: absolute;
+  top:-10px;
+  right: -10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  line-height: 30px;
+  background: red;
+  color: #fff;
+  opacity: .8;
+  text-align:center;
+}
+.supervisor-list-box.active .close{
+  background: #09bb07;
+}
+.supervisor-list-box .line{
+  height: 24px;
+  line-height: 24px;
+}
+.supervisor-list-box span{
+  display: inline-block;
+  width: 45%;
+  margin-right: 5%;
+  overflow: hidden;
+}
+.supervisor-list-box image{
+  width: 100%;
+}
+.text-c{
+  text-align: center;
 }

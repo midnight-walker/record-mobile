@@ -1,0 +1,4 @@
+/* pages/supervisorDetail/mine.wxss */
+.tool-tip{
+  text-align: center;
+}

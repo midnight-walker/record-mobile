@@ -49,6 +49,33 @@ input{
   width:100rpx;
 }
 
+.uploaded-wrap{
+  width: 350rpx;
+  height:350rpx;
+  margin-left:25rpx;
+  position:relative;
+  display: inline-block;
+}
+
+.uploaded-wrap image{
+  width: 350rpx;
+  height:350rpx;
+}
+
+.uploaded-wrap .close{
+  position: absolute;
+  top:0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  line-height: 30px;
+  background: #fff;
+  color: #aaa;
+  opacity: .8;
+  text-align:center;
+}
+
 
 .scsx-bottom-nav{
   position: fixed;

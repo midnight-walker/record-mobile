@@ -1,0 +1,138 @@
+<view class="body-contener">
+  <view hidden="{{showPage!==1}}" class="creater">
+    <!--<view class="type-content">
+      <view class="section__title">项目：</view>
+      <picker bindchange="projectChange" value="projectIndex" range-key="name" range="{{projectList}}">
+        <view class="picker">
+          {{projectList[projectIndex].name}}
+        </view>
+      </picker>
+    </view>
+    <view class="type-content">
+      <view class="section__title">监理点：</view>
+      <picker bindchange="supervisorChange" value="supervisorIndex" range-key="showName" range="{{supervisorSearchList}}">
+        <view class="picker">
+          {{supervisorSearchList[supervisorIndex].showName}}
+        </view>
+      </picker>
+    </view>-->
+    <view class="location-content text-c">
+      <view class="section__title">监理点编号：</view>
+      <input bindblur="getSupervisor" />
+    </view>
+    <view hidden='{{!selectSupervisor.region}}' class="supervisor-content supervisor-list-box">
+      <view class='line'>
+        <span>区县：{{selectSupervisor.region}}</span>
+        <span>乡镇：{{selectSupervisor.station}}</span>
+      </view>
+      <view class='line'>
+        <span>村：{{selectSupervisor.village}}</span>
+        <span>组、社：{{selectSupervisor.group}}</span>
+      </view>
+      <view class='line'>
+        <span>小班号：{{selectSupervisor.smallClass}}</span>
+        <span>小地名：{{selectSupervisor.placeName}}</span>
+      </view>
+      <view class='line'>
+        <span>小班面积：{{selectSupervisor.smallClassArea}}</span>
+        <span>树种组成：{{selectSupervisor.treeCompose}}</span>
+      </view>
+    </view>
+
+    <view class="image-content">
+      <view wx:if="{{currDetail.picture}}" class="uploaded">
+        <view class="uploaded-wrap">
+          <image mode="aspectFill" src="{{currDetail.picture}}"></image>
+          <view bindtap="deleteImage" class="close">X</view>
+        </view>
+      </view>
+      <view wx:if="{{!currDetail.picture}}" class="image-upload">
+        <view class="image-plus image-plus-nb" bindtap="chooseImage">
+          <view class="image-plus-horizontal"></view>
+          <view class="image-plus-vertical"></view>
+        </view>
+        <view class="image-plus-text">选择图片</view>
+      </view>
+
+      <view class="location-content">
+        <view class="section">
+          <view class="section__title">经度:</view>
+          <input value="{{currDetail.longitude}}" disabled='true' />
+          <button bindtap="noneLocation" style="background:red;color:#fff;">缺失</button>
+        </view>
+        <view class="section">
+          <view class="section__title">纬度:</view>
+          <input value="{{currDetail.latitude}}" disabled='true' />
+          <button bindtap="getLocation">定位</button>
+        </view>
+      </view>
+
+      <view class="type-content">
+        <view class="section__title">问题分类:</view>
+        <picker bindchange="recordTypeCate1Change" value="cate1Index" range-key="name" range="{{recordTypeCate1}}">
+          <view class="picker">
+            {{recordTypeCate1[cate1Index].name}}
+          </view>
+        </picker>
+      </view>
+      <view wx:if="{{cate1Index!==0}}" class="type-content">
+        <view class="section__title">问题子类:</view>
+        <picker bindchange="recordTypeCate2Change" value="cate2Index" range-key="name" range="{{recordTypeSearchCate2}}">
+          <view class="picker">
+            {{recordTypeSearchCate2[cate2Index].name}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="description-content">
+        <view class="section__title">问题描述:</view>
+        <textarea bindblur='setDescription' value="{{currDetail.description}}" auto-height placeholder="" />
+      </view>
+
+      <view class="description-content">
+        <view class="section__title">数量:</view>
+        <textarea bindblur='setQuantity' value="{{currDetail.quantity}}" auto-height placeholder="数量" />
+      </view>
+    </view>
+
+    <button bindtap="viewMap" class="btn">查看当前位置地图</button>
+    <button bindtap="save" class="save btn">保存</button>
+  </view>
+
+  <view class="saved supervisor-list-wrap" hidden="{{showPage!==2}}">
+    <view wx:for="{{supervisorDetailList}}" class="supervisor-list-box {{item.recordTypeId===0?'active':''}}" wx:key="localTime">
+      <view bindtap="deleteSupervisorItem" data-index="{{index}}" class="close">X</view>
+      <image mode="aspectFill" src="{{item.picture}}"></image>
+      <view class='line'>
+        保存时间：{{item.timeStr}}
+      </view>
+      <view class='line'>
+        项目：{{item.projectName}}
+      </view>
+      <view class='line'>
+        监理点：{{item.supervisorName}}
+      </view>
+      <view class='line'>
+        <span>经度：{{item.longitude}}</span>
+        <span>纬度：{{item.latitude}}</span>
+      </view>
+      <view class='line'>
+        问题类型：{{item.recordTypeName}}
+      </view>
+      <view class='line'>
+        数量：{{item.quantity}}
+      </view>
+      描述：{{item.description}}
+    </view>
+    <button wx:if="{{supervisorDetailList.length>0}}" bindtap="upload" class="upload btn">上传</button>
+    <view wx:if="{{supervisorDetailList.length<=0}}">
+      目前没有已保存的记录，去新增记录吧
+    </view>
+  </view>
+
+
+  <view class="bottom-nav">
+    <view bindtap='switchPage' data-id="1" class="bottom-nav-item bottom-first {{showPage==1?'curr':''}}">新增记录</view>
+    <view bindtap='switchPage' data-id="2" class="bottom-nav-item {{showPage==2?'curr':''}}">已保存的记录</view>
+  </view>
+</view>

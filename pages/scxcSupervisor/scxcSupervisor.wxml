@@ -69,7 +69,10 @@
       </view>
 
       <view class="uploaded">
-        <image wx:for="{{showImage}}" wx:key="imageSrc" style="width: 350rpx;height:350rpx;margin-left:25rpx;" mode="aspectFill" src="{{item.imageSrc}}"></image>
+        <view wx:for="{{uploadedImage}}" class="uploaded-wrap" style="width: 350rpx;height:350rpx;margin-left:25rpx;position:relative;">
+          <image style="width: 350rpx;height:350rpx;" mode="aspectFill" src="{{item}}"></image>
+          <view wx:if="{{!isEdit}}" bindtap="deleteImage" data-index="{{index}}" class="close">X</view>
+        </view>
       </view>
 
       <view wx-if="{{!isEdit}}" class="image-upload">

@@ -1,5 +1,5 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
     "pages/logs/logs",
     "pages/error/notAuth",
@@ -8,12 +8,15 @@
     "pages/supervisor/supervisor",
     "pages/businessList/businessList",
     "pages/scxcSupervisor/scxcSupervisor",
-    "pages/scxcSupervisor/scxcSupervisorList"
+    "pages/scxcSupervisor/scxcSupervisorList",
+    "pages/locationRecord/locationRecord",
+    "pages/supervisorDetail/detail",
+    "pages/supervisorDetail/mine"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   }
 }

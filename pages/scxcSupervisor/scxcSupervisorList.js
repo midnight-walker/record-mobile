@@ -69,7 +69,7 @@ Page({
                 })
                 console.log(res.data);
                 that.setData({
-                  list: res.data
+                  list: res.data.reverse()
                 })
               }
               
@@ -101,7 +101,6 @@ Page({
     let idx=e.currentTarget.dataset.index;
     let data = this.data.list[idx];
     data.time=moment(data.time).format('YYYY-MM-DD');
-    data.picture='';
     wx.setStorage({
       key: "scxcData",
       data: data,

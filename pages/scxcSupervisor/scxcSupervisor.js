@@ -1,10 +1,5 @@
-const Upyun = require('../../utils/upyun-wxapp-sdk')
-const upyun = new Upyun({
-  bucket: 'ljb-image',
-  operator: 'tsq',
-  getSignatureUrl: 'https://94oo.top/auth'
-})
-const imageServer = 'http://ljb-image.test.upcdn.net';
+
+const imgUploader = require('../../utils/uploadImage')
 const moment = require('../../utils/moment.js');
 const tooltip = require('data.js');
 const switchPage=require('components/switchPage');
@@ -92,8 +87,11 @@ let option = {
       key:'scxcData',
       success:function(e){
         e.data.time = moment().format('YYYY-MM-DD');
+        console.log(e.data.picture)
+        let pics = e.data.picture ? e.data.picture.split(',') : [];
         that.setData({
-          postData: Object.assign({}, that.data.postData,e.data)
+          postData: Object.assign({}, that.data.postData,e.data),
+          uploadedImage: pics[0] !== '' ? pics : []
         });
       }
     })
@@ -180,43 +178,44 @@ let option = {
   },
   chooseImage: function () {
     const self = this
-
     wx.chooseImage({
-      count: 1,
+      count: 9,
       sizeType: ['compressed'],
-      sourceType: ['album'],
       success: function (res) {
-        console.log('chooseImage success, temp path is', res.tempFilePaths[0])
-
-        const imageSrc = res.tempFilePaths[0], now = moment();
-        upyun.upload({
-          localPath: imageSrc,
-          remotePath: '/' + now.format('YYYY') + '/' + now.format('MM') + '/' + now.format('DD') + '/' + imageSrc.split('tmp/')[1],
-          success: function (res) {
-            console.log('uploadImage success, res is:', res)
-
-            wx.showToast({
-              title: '上传成功',
-              icon: 'success',
-              duration: 1000
-            })
-            let showImage = self.data.showImage, uploadedImage = self.data.uploadedImage;
-            showImage.push({ imageSrc });
-            uploadedImage.push(imageServer + JSON.parse(res.data).url);
-            self.setData({
-              showImage,
-              uploadedImage
-            })
-
-          },
-          fail: function ({ errMsg }) {
-            console.log('uploadImage fail, errMsg is', errMsg)
-          }
+        wx.showLoading({ title: '上传图片中' });
+        imgUploader(res.tempFilePaths).then(rs=>{
+          wx.hideLoading();
+          wx.showToast({
+            title: '上传成功',
+            icon: 'success',
+            duration: 1000
+          })
+          let showImage = self.data.showImage, uploadedImage = self.data.uploadedImage;
+          uploadedImage=uploadedImage.concat(rs);
+          self.setData({
+            uploadedImage
+          })
+        }).catch(e => {
+          wx.hideLoading();
+          wx.showToast({
+            title: '上传失败',
+            icon: 'loading',
+            duration: 2000
+          })
+          console.log(e);
         })
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
       }
+    })
+  },
+  deleteImage: function (e) {
+    let idx=e.currentTarget.dataset.index;
+    let uploadedImage = this.data.uploadedImage;
+    uploadedImage.splice(idx,1);
+    this.setData({
+      uploadedImage
     })
   },
   resetForm:function(){
@@ -296,7 +295,7 @@ let option = {
         },
         success: function (res) {
           if (res.statusCode === 200) {
-            wx.setStorage({ key: "scxcData", data: data });
+            wx.setStorage({ key: "scxcData", data: formData });
             wx.showToast({
               title: '保存成功',
               duration: 3000,
@@ -307,7 +306,7 @@ let option = {
               }
             })
           } else {
-            this.setData({
+            that.setData({
               isSubmit: false
             })
             wx.showModal({

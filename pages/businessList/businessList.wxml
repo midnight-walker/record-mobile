@@ -2,10 +2,10 @@
   <view class="section">
     <view class="section_title">监理</view>
     <view class="flex-wrap">
-      <navigator class="detail" url="/pages/scxcSupervisor/scxcSupervisor" open-type="navigate">松材线虫病除治质量监理</navigator>
+      <navigator class="detail" url="/pages/supervisorDetail/detail" open-type="navigate">松材线虫病除治质量监理</navigator>
     </view>
     <view class="flex-wrap">
-      <navigator class="detail" url="/pages/scxcSupervisor/scxcSupervisorList" open-type="navigate">我的提交记录</navigator>
+      <navigator class="detail" url="/pages/supervisorDetail/mine" open-type="navigate">我的提交记录</navigator>
     </view>
   </view>
   <view class="section">
