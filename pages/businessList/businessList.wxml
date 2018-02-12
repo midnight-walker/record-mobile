@@ -5,7 +5,10 @@
       <navigator class="detail" url="/pages/supervisorDetail/detail" open-type="navigate">松材线虫病除治质量监理</navigator>
     </view>
     <view class="flex-wrap">
-      <navigator class="detail" url="/pages/supervisorDetail/mine" open-type="navigate">我的提交记录</navigator>
+      <navigator class="detail" url="/pages/supervisorDetail/mine" open-type="navigate">提交记录</navigator>
+    </view>
+    <view class="flex-wrap">
+      <navigator class="detail" url="/pages/supervisorDetail/map" open-type="navigate">记录地图</navigator>
     </view>
   </view>
   <view class="section">

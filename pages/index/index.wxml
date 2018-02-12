@@ -5,6 +5,7 @@
   </view>
   <view class="usermotto">
     <text class="user-motto">{{motto}}</text>
+    <button wx:if="{{showRefresh}}" bindtap='refreshData'>更新数据</button>
   </view>
   <view class="test"></view>
   

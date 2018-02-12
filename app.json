@@ -11,7 +11,8 @@
     "pages/scxcSupervisor/scxcSupervisorList",
     "pages/locationRecord/locationRecord",
     "pages/supervisorDetail/detail",
-    "pages/supervisorDetail/mine"
+    "pages/supervisorDetail/mine",
+    "pages/supervisorDetail/map"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,10 +1,44 @@
 <!--pages/supervisorDetail/mine.wxml-->
 <view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">监理点编号</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input class="weui-input" bindblur='filterData' placeholder="输入编号查询" />
+      </view>
+    </view>
+
+    <view class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd">只看自己</view>
+      <view class="weui-cell__ft">
+        <switch bindchange="switchData" checked="{{operator}}" />
+      </view>
+    </view>
+
+    <view class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd">只显示有问题</view>
+      <view class="weui-cell__ft">
+        <switch bindchange="switchRecordType" checked="{{recordType}}" />
+      </view>
+    </view>
+  </view>
   <view class="supervisor-list-wrap">
-    <view wx:for="{{supervisorDetailList}}" class="supervisor-list-box {{item.recordTypeId===0?'active':''}}" wx:key="localTime">
+    <view wx:for="{{supervisorDetailList}}" class="supervisor-list-box {{!item.isError?'active':''}}" wx:key="localTime">
       <image mode="aspectFill" src="{{item.picture}}"></image>
       <view class='line'>
-        上传时间：{{item.timeStr}}
+        保存时间：{{item.savedTime}}
+      </view>
+      <view class='line'>
+        上传时间：{{item.createdTime}}
+      </view>
+      <view class='line'>
+        监理记录编号：{{item.id}}
+      </view>
+      <view class='line'>
+        <span>监理点：{{item.supervisor.id}}</span>
+        <span>上传人：{{item.member.wxname}}</span>
       </view>
       <view class='line'>
         <span>区县：{{item.supervisor.region}}</span>
@@ -27,18 +61,21 @@
         <span>纬度：{{item.latitude}}</span>
       </view>
       <view class='line'>
-        问题类型：{{item.recordTypeName}}
+        问题类型：{{item.typeName}}
       </view>
       <view class='line'>
         数量：{{item.quantity}}
       </view>
-      描述：{{item.description}}
+      <view class='line'>
+        描述：{{item.description}}
+      </view>
+      <button bindtap='viewLocation' data-id="{{item.id}}" class="weui-btn mini-btn" type="primary" size="mini">查看位置</button>
     </view>
     <view class="tool-tip" wx:if="{{supervisorDetailList.length<=0}}">
       暂无上传记录
     </view>
-    <view class="tool-tip" wx:if="{{supervisorDetailList.length>=30}}">
-      最多显示最近的30条记录
+    <view class="tool-tip" wx:if="{{supervisorDetailList.length>=100}}">
+      最多显示最近的100条记录
     </view>
   </view>
 </view>

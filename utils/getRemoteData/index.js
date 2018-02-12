@@ -5,13 +5,7 @@ module.exports = () => {
     promiseRequest('/api/supervisor', {}),
     promiseRequest('/api/recordType', {})
   ]).then(res => {
-    let recordTypeList = [{
-      id: 0,
-      name: '正常',
-      pid: 0,
-      level: 1,
-      description: '正常'
-    }].concat(res[2].data);
+    let recordTypeList = res[2].data;
     res[1].data.forEach(item=>{
       item.showName=item.village+'-'+item.placeName;
     })

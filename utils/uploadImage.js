@@ -7,12 +7,14 @@ const upyun = new Upyun({
 })
 const imageServer = 'http://ljb-image.test.upcdn.net';
 
-let upload=function(img){
+let upload = function (img, path){
   return new Promise((resolve,reject)=>{
-    let now = moment();
+    let now = moment(),
+      arr = img.split('.'),
+      len = arr.length;
     upyun.upload({
       localPath: img,
-      remotePath: '/' + now.format('YYYY') + '/' + now.format('MM') + '/' + now.format('DD') + '/' + img.split('//')[1],
+      remotePath: '/' + path + '/' + now.format('YYYY_HH_MM_DD_mm_ss_SSS')+'.'+ arr[len-1],
       success: function (res) {
         console.log('uploadImage success, res is:', res)
         resolve(imageServer + JSON.parse(res.data).url);
@@ -24,10 +26,10 @@ let upload=function(img){
   })
 }
 
-module.exports=function(imgList){
+module.exports=function(imgList,path){
   return new Promise((resolve,reject)=>{
     Promise.all(imgList.map((img) => {
-      return upload(img);
+      return upload(img, path);
     })).then(resolve, reject);
   })
 }

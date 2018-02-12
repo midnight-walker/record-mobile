@@ -1,5 +1,5 @@
 // pages/supervisorDetail/mine.js
-let { promiseRequest,findBy } = require('../../utils/util.js');
+let { promiseRequest, findBy } = require('../../utils/util.js');
 const moment = require('../../utils/moment.js');
 
 
@@ -9,83 +9,86 @@ Page({
    * 页面的初始数据
    */
   data: {
-    supervisorDetailList: []
+    supervisorDetailList: [],
+    supervisorId: 0,
+    operator: true,
+    recordType: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let recordTypeList = wx.getStorageSync('recordTypeList'),
-      supervisorList = wx.getStorageSync('supervisorList') || [];
-
-    promiseRequest('/api/supervisorDetail', {
-      page:1,
-      pageSize:30
-    }).then(res => {
-      res.data.forEach(item=>{
-        item.timeStr = moment(item.createdAt, 'x').format('YYYY年MM月DD日 HH时mm分ss秒');
-        item.supervisor = supervisorList.find(s => s.id === item.supervisorId) || {};
-        item.recordTypeName = findBy(recordTypeList, item.recordTypeId);
-      })
+    this.getData()
+  },
+  filterData(e) {
+    let value = e.detail.value;
+    if (!isNaN(value)) {
       this.setData({
-        supervisorDetailList:res.data
+        supervisorId: parseInt(value)
       })
-    }).catch(e => {
+      this.getData();
+    } else if (value === '') {
+      this.setData({
+        supervisorId: 0
+      })
+      this.getData();
+    } else {
       wx.showModal({
-        content: e.toString(),
+        content: '监理点编号必须是数字',
         showCancel: false,
         confirmText: "确定"
       })
+    }
+  },
+  switchData(e) {
+    this.setData({
+      operator: e.detail.value
+    });
+    this.getData()
+  },
+  switchRecordType(e) {
+    this.setData({
+      recordType: e.detail.value
+    });
+    this.getData()
+  },
+  getData() {
+    let data = {
+      page: 1,
+      pageSize: 100
+    }
+    if (this.data.operator) {
+      data.operator = this.data.operator;
+    }
+    if (this.data.supervisorId) {
+      data.supervisorId = this.data.supervisorId;
+    }
+    if (this.data.recordType) {
+      data.onlyError = this.data.recordType;
+    }
+    wx.showLoading({ title: '加载中' });
+    promiseRequest('/api/supervisorDetail', data).then(res => {
+      res.data.forEach(item => {
+        item.savedTime = moment(item.savedAt, 'x').format('YYYY年MM月DD日 HH时mm分ss秒');
+        item.createdTime = moment(item.createdAt, 'x').format('YYYY年MM月DD日 HH时mm分ss秒');
+        item.isError = item.record_types[0].type !== 0;
+        item.typeName = item.record_types.reduce((p, next) => {
+          return p + ' ' + next.name
+        }, '');
+      })
+      this.setData({
+        supervisorDetailList: res.data
+      })
+      wx.hideLoading();
     });
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  viewLocation(e){
+    let id=e.target.dataset.id;
+    if(!isNaN(id)){
+      wx.navigateTo({
+        url: 'map?id='+id
+      });
+    }
   }
 })

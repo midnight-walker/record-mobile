@@ -1,3 +1,42 @@
+<view hidden='{{!showLayer}}' class='type-layer'>
+  <view class='type-layer-content'>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input p20">
+        <view class="weui-cell__hd">
+          <view class="weui-label">问题分类:</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker bindchange="recordTypeCate1Change" value="cate1Index" range-key="name" range="{{recordTypeCate1}}">
+            <view class="picker">
+              {{recordTypeCate1[cate1Index].name}}
+            </view>
+          </picker>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input p20">
+        <view class="weui-cell__hd">
+          <view class="weui-label">问题子类:</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker bindchange="recordTypeCate2Change" value="cate2Index" range-key="name" range="{{recordTypeSearchCate2}}">
+            <view class="picker">
+              {{recordTypeSearchCate2[cate2Index].name}}
+            </view>
+          </picker>
+        </view>
+      </view>
+      <view class="button-sp-area">
+        <button class="weui-btn mini-btn" bindtap='closeLayer' type="primary" data-idx="1" size="mini">确定</button>
+        <button class="weui-btn mini-btn" bindtap='closeLayer' type="warn" data-idx="0" size="mini">取消</button>
+      </view>
+
+    </view>
+  </view>
+  <view class='layer-mask'>
+  </view>
+</view>
+
+
 <view class="body-contener">
   <view hidden="{{showPage!==1}}" class="creater">
     <!--<view class="type-content">
@@ -54,6 +93,41 @@
         <view class="image-plus-text">选择图片</view>
       </view>
 
+
+      <view hidden='{{selectedTypes.length===0}}' class="weui-cells weui-cells_after-title type-list">
+        <view wx:for="{{selectedTypes}}" wx:key="id" class="weui-cell weui-cell_input weui-cell_vcode">
+          <view class="weui-cell__hd">
+            <view class="weui-label">{{'问题'+(index+1)}}</view>
+          </view>
+          <view class="weui-cell__bd">
+            <view class="weui-label">{{item.name}}</view>
+          </view>
+          <view class="weui-cell__ft">
+            <view bindtap="deleteType" data-idx="{{index}}" class="close">X</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="image-upload">
+        <view class="image-plus image-plus-nb" bindtap="addType">
+          <view class="image-plus-horizontal"></view>
+          <view class="image-plus-vertical"></view>
+        </view>
+        <view class="image-plus-text">添加问题</view>
+      </view>
+
+
+      <view class="description-content">
+        <view class="section__title">问题描述:</view>
+        <textarea bindblur='setDescription' value="{{currDetail.description}}" auto-height placeholder="" />
+      </view>
+
+      <view class="description-content">
+        <view class="section__title">数量:</view>
+        <textarea bindblur='setQuantity' value="{{currDetail.quantity}}" auto-height placeholder="数量" />
+      </view>
+
+
       <view class="location-content">
         <view class="section">
           <view class="section__title">经度:</view>
@@ -66,42 +140,16 @@
           <button bindtap="getLocation">定位</button>
         </view>
       </view>
-
-      <view class="type-content">
-        <view class="section__title">问题分类:</view>
-        <picker bindchange="recordTypeCate1Change" value="cate1Index" range-key="name" range="{{recordTypeCate1}}">
-          <view class="picker">
-            {{recordTypeCate1[cate1Index].name}}
-          </view>
-        </picker>
-      </view>
-      <view wx:if="{{cate1Index!==0}}" class="type-content">
-        <view class="section__title">问题子类:</view>
-        <picker bindchange="recordTypeCate2Change" value="cate2Index" range-key="name" range="{{recordTypeSearchCate2}}">
-          <view class="picker">
-            {{recordTypeSearchCate2[cate2Index].name}}
-          </view>
-        </picker>
-      </view>
-
-      <view class="description-content">
-        <view class="section__title">问题描述:</view>
-        <textarea bindblur='setDescription' value="{{currDetail.description}}" auto-height placeholder="" />
-      </view>
-
-      <view class="description-content">
-        <view class="section__title">数量:</view>
-        <textarea bindblur='setQuantity' value="{{currDetail.quantity}}" auto-height placeholder="数量" />
-      </view>
     </view>
-
+    
     <button bindtap="viewMap" class="btn">查看当前位置地图</button>
     <button bindtap="save" class="save btn">保存</button>
   </view>
 
   <view class="saved supervisor-list-wrap" hidden="{{showPage!==2}}">
-    <view wx:for="{{supervisorDetailList}}" class="supervisor-list-box {{item.recordTypeId===0?'active':''}}" wx:key="localTime">
+    <view wx:for="{{supervisorDetailList}}" class="supervisor-list-box {{!item.isError?'active':''}}" wx:key="localTime">
       <view bindtap="deleteSupervisorItem" data-index="{{index}}" class="close">X</view>
+      <view bindtap="changeImage" data-index="{{index}}" class="change-image">!</view>
       <image mode="aspectFill" src="{{item.picture}}"></image>
       <view class='line'>
         保存时间：{{item.timeStr}}
@@ -129,6 +177,8 @@
       目前没有已保存的记录，去新增记录吧
     </view>
   </view>
+
+
 
 
   <view class="bottom-nav">

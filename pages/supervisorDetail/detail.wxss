@@ -29,6 +29,20 @@
   text-align:center;
 }
 
+.change-image{
+  position: absolute;
+  top:-10px;
+  left: -10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  line-height: 30px;
+  background: #ff6900;
+  color: #fff;
+  opacity: .8;
+  text-align:center;
+}
+
 
 .btn{
   background: #09bb07;
@@ -104,4 +118,41 @@
   border: 1px solid #ccc;
   padding: 10px;
   font-size: 14px;
+}
+
+
+.weui-cell{
+  font-size: 14px;
+}
+.p20{
+  padding: 10px 15px;
+}
+.type-layer,.layer-mask{
+  position: fixed;
+  top:0px;
+  left: 0px;
+  right: 0px;
+  bottom:0px;
+  z-index: 999;
+}
+.type-layer-content{
+  position: absolute;
+  width: 80%;
+  background:#fff;
+  margin: 30% 10%;
+  z-index: 1000
+}
+.layer-mask{
+  background: #aaa;
+  opacity: 0.5;
+}
+.type-layer-content .mini-btn{
+  width: 30%;
+  margin: 0 10%
+}
+.button-sp-area{
+  margin-top: 20px;
+}
+.type-list .weui-cell{
+  padding: 15px;
 }

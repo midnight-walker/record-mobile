@@ -5,7 +5,7 @@ const imgUploader = require('../../utils/uploadImage');
 var app = getApp();
 let defaultDetail=()=>{
   return {
-    recordTypeId: 0,
+    recordTypes: [],
     quantity: 1,
     picture:'',
     longitude:'',
@@ -29,8 +29,6 @@ Page({
     projectList: [],
     supervisorList: [],
     supervisorSearchList: [],
-    projectId: '',
-    supervisorId: '',
     selectSupervisor:{},
     showPage: 1,
     savedDetail:[],
@@ -42,6 +40,8 @@ Page({
     cate2Index:0,
     currDetail: defaultDetail(),
     supervisorDetailList:[],
+    showLayer:false,
+    selectedTypes:[]
   },
 
   /**
@@ -70,6 +70,7 @@ Page({
         recordTypeList,
         recordTypeCate1,
         recordTypeCate2,
+        recordTypeSearchCate2: recordTypeCate2.filter(cate2=>cate2.pid===recordTypeCate1[0].id),
         supervisorDetailList,
       })
     }catch(e){
@@ -80,26 +81,6 @@ Page({
       })
     }
   },
-  /*projectChange(e){
-    let value = parseInt(e.detail.value),
-    projectId = this.data.projectList[value].id,
-    supervisorSearchList = this.data.supervisorList.filter(item => item.projectId === projectId),
-    supervisorId = supervisorSearchList[0].id;
-    this.setData({
-      projectIndex: value,
-      projectId,
-      supervisorSearchList,
-      supervisorId,
-      supervisorIndex: 0
-    })
-  },
-  supervisorChange(e) {
-    let value = parseInt(e.detail.value);
-    this.setData({
-      supervisorIndex: value,
-      supervisorId: this.data.supervisorSearchList[value].id
-    })
-  },*/
   switchPage:function(e){
     let showPage=parseInt(e.target.dataset.id);
     this.setData({
@@ -115,6 +96,30 @@ Page({
         this.setData({
           'currDetail.picture': res.tempFilePaths[0]
         });
+      },
+      fail: function ({ errMsg }) {
+        console.log('chooseImage fail, err is', errMsg)
+      }
+    })
+  },
+  changeImage: function (e) {
+    const self = this
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      success: (res) => {
+        let path = res.tempFilePaths[0];
+        let supervisorDetailList = this.data.supervisorDetailList,
+          index = e.target.dataset.index,
+          supervisorDetail=supervisorDetailList[index];
+
+        if (supervisorDetail){
+          supervisorDetail.picture=path;
+        }
+        wx.setStorageSync('supervisorDetailList', supervisorDetailList);
+        this.setData({
+          supervisorDetailList
+        })
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
@@ -208,7 +213,7 @@ Page({
     let { latitude, longitude}=this.data.currDetail;
     if (latitude && longitude){
       wx.openLocation({
-        address:"说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明",
+        address:"",
         latitude,
         longitude,
       })
@@ -221,11 +226,18 @@ Page({
   },
   checkSaveData(){
     return new Promise((resolve,reject)=>{
-      let recordTypeId = 0,recordTypeName='正常', submitData = Object.assign({}, this.data.currDetail);
-      if (this.data.cate1Index) {
-        let recordType = this.data.recordTypeSearchCate2[this.data.cate2Index];
-        recordTypeId = recordType.id;
-        recordTypeName = recordType.name;
+      let submitData = Object.assign({}, this.data.currDetail),
+        recordType = this.data.recordTypeSearchCate2[this.data.cate2Index],
+        recordTypeName = '',
+        isError=true;
+      if (this.data.selectedTypes.length===0){
+        reject('请添加问题类型');
+      }else{
+        submitData.recordTypes = this.data.selectedTypes.map(item=>item.id);
+        recordTypeName = this.data.selectedTypes.reduce((p,next)=>{
+          return p+' '+next.name;
+        },'')
+        isError = this.data.selectedTypes[0].type!==0;
       }
       if (!submitData.projectId || !submitData.supervisorId) {
         reject('请先选输入监理点编号并查询！');
@@ -236,18 +248,18 @@ Page({
       if (submitData.longitude === "" && submitData.latitude === "") {
         reject('请先定位！');
       }
-      if (submitData.longitude === 0 && submitData.latitude === 0 && submitData.description === '' && recordTypeId !== 0) {
+      if (submitData.longitude === 0 && submitData.latitude === 0 && submitData.description === '') {
         reject('当前定位不成功，请填写问题描述！');
-        
         return;
       }
-      if (isNaN(submitData.quantity)) {
+      if (!submitData.quantity || isNaN(submitData.quantity)) {
         reject('数量必须是数字！');
       }
-      submitData.recordTypeId = recordTypeId;
-      submitData.recordTypeName = recordTypeName;
-      submitData.timeStamp = +new Date();
-      submitData.timeStr = moment(submitData.timeStamp, 'x').format('YYYY年MM月DD日 HH时mm分ss秒');
+      //submitData.recordTypeId = recordTypeId;
+      submitData.recordTypeName = recordTypeName; 
+      submitData.isError = isError;
+      submitData.savedAt = +new Date();
+      submitData.timeStr = moment(submitData.savedAt, 'x').format('YYYY年MM月DD日 HH时mm分ss秒');
       submitData.projectName = this.data.projectList.find(item => item.id === submitData.projectId).name;
       submitData.supervisorName = this.data.supervisorList.find(item => item.id === submitData.supervisorId).placeName;
       resolve(submitData);
@@ -260,9 +272,16 @@ Page({
         let supervisorDetailList = this.data.supervisorDetailList
         supervisorDetailList.unshift(res);
         wx.setStorageSync('supervisorDetailList', supervisorDetailList);
+        let detail=this.data.currDetail,
+          projectId = detail.projectId,
+          supervisorId = detail.supervisorId,
+          currDetail = defaultDetail();
+        currDetail.projectId = projectId;
+        currDetail.supervisorId=supervisorId;
         this.setData({
           supervisorDetailList,
-          currDetail: defaultDetail()
+          currDetail,
+          selectedTypes:[]
         })
         wx.hideLoading();
         wx.showModal({
@@ -281,19 +300,22 @@ Page({
     },100)
   },
   uploadItem(item, supervisorDetailList){
-    imgUploader([item.picture]).then(pics => {
-      let { supervisorId, recordTypeId, longitude, latitude, description, quantity, status,reason}=item;
+    imgUploader([item.picture], item.supervisorId).then(pics => {
+      let { supervisorId, recordTypes, longitude, latitude, description, quantity, status, reason,savedAt}=item;
+      recordTypes.sort((a,b)=>a>b);
+      console.log(recordTypes);
       promiseRequest('/api/supervisorDetail',{
         picture: pics[0],
         supervisorId,
-        recordTypeId, 
+        recordTypeId:recordTypes[0],
+        recordTypes, 
         longitude, 
         latitude, 
         description, 
         quantity, 
         status, 
         reason,
-        operator: this.data.userInfo.nickName
+        savedAt,
       },"POST").then(res=>{
         if(res.success){
           supervisorDetailList.pop();
@@ -305,6 +327,8 @@ Page({
         }else{
           throw new Error(res.message);
         }
+      }).catch(e=>{
+        throw new Error(e);
       })
     }).catch(e => {
       wx.showModal({
@@ -349,5 +373,55 @@ Page({
          selectSupervisor:{...supervisor}
       })
     }
-  }
+  },
+  closeLayer(e){
+    let idx=e.target.dataset.idx;
+    this.setData({
+      showLayer: false
+    })
+    if(idx==="1"){
+      let recordType = this.data.recordTypeSearchCate2[this.data.cate2Index], selectedTypes = this.data.selectedTypes;
+      if (selectedTypes.length > 0 && recordType.type !== 2){
+        wx.showToast({
+          title: '只有伐桩能多选',
+          icon: 'loading',
+          duration: 2000
+        })
+        return;
+      }
+      if (selectedTypes.some(item => item.type !== 2)) {
+        wx.showToast({
+          title: '只有伐桩能多选',
+          icon: 'loading',
+          duration: 2000
+        })
+        return;
+      }
+      if(selectedTypes.find(item=>item.id===recordType.id)){
+        wx.showToast({
+          title: '此类型已选择过',
+          icon: 'loading',
+          duration: 2000
+        })
+      }else{
+        selectedTypes.push(recordType);
+        this.setData({
+          selectedTypes
+        })
+      }
+    }
+  },
+  addType(e){
+    this.setData({
+      showLayer: true
+    })
+  },
+  deleteType(e) {
+    let idx = e.target.dataset.idx, selectedTypes = this.data.selectedTypes;
+    selectedTypes.splice(idx,1);
+    this.setData({
+      selectedTypes
+    })
+  },
+
 })
