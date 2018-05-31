@@ -14,9 +14,15 @@ let upload = function (img, path){
       len = arr.length;
     upyun.upload({
       localPath: img,
-      remotePath: '/' + path + '/' + now.format('YYYY_HH_MM_DD_mm_ss_SSS')+'.'+ arr[len-1],
+      remotePath: '/' + path + '/' + now.format('YYYY_MM_DD_HH_mm_ss_SSS')+'.'+ arr[len-1],
       success: function (res) {
         console.log('uploadImage success, res is:', res)
+        wx.removeSavedFile({
+          filePath: img,
+          complete: function (res) {
+            console.log(res)
+          }
+        })
         resolve(imageServer + JSON.parse(res.data).url);
       },
       fail: function ({ errMsg }) {

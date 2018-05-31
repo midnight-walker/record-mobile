@@ -2,7 +2,21 @@ var app = getApp()
 Page({
   data: {
     motto: 'Hello World',
-    userInfo: {}
+    userInfo: {},
+    list: [
+      {
+        id: 'form',
+        name: '表单',
+        open: false,
+        pages: ['button', 'list', 'input', 'slider', 'uploader']
+      },
+      {
+        id: 'widget',
+        name: '基础组件',
+        open: false,
+        pages: ['article', 'badge', 'flex', 'footer', 'gallery', 'grid', 'icons', 'loadmore', 'panel', 'preview', 'progress']
+      }
+    ]
   },
   onLoad: function () {
     console.log('onLoad')

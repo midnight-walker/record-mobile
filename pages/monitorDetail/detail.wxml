@@ -1,0 +1,197 @@
+<view class="body-contener">
+  <view hidden="{{showPage!==1}}" class="creater">
+    <view class="weui-cells__title">监测点编号</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__bd">
+          <input class="weui-input" bindblur="getMonitor" placeholder="请输入监测点编号" />
+        </view>
+      </view>
+    </view>
+
+    <view hidden='{{!selectMonitor.region}}' class='monitor-info'>
+      <view class="weui-flex">
+        <view class="weui-flex__item">区县：{{selectMonitor.region}}</view>
+        <view class="weui-flex__item">乡镇：{{selectMonitor.station}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">村：{{selectMonitor.village}}</view>
+        <view class="weui-flex__item">组、社：{{selectMonitor.group}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">小班号：{{selectMonitor.smallClass}}</view>
+        <view class="weui-flex__item">小地名：{{selectMonitor.placeName}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">小班面积：{{selectMonitor.smallClassArea}}</view>
+        <view class="weui-flex__item">树种组成：{{selectMonitor.treeCompose}}</view>
+      </view>
+    </view>
+
+    <view class="weui-cells__title">诱捕器信息</view>
+    <view class="weui-cells weui-cells_after-title">
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">人工编号</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input bindblur='signNumberInput' value="{{currDetail.signNumber}}" class="weui-input" placeholder="请输入人工编号" />
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">经度</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input bindblur='longitudeInput' value="{{currDetail.longitude}}" class="weui-input" placeholder="请输入经度" />
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">纬度</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input bindblur='latitudeInput' value="{{currDetail.latitude}}" class="weui-input" placeholder="请输入纬度" />
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input weui-cell_vcode">
+        <view class="weui-cell__hd">
+          <view class="weui-label">海拔</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input bindblur='altitudeInput' value="{{currDetail.altitude}}" class="weui-input" placeholder="请输入海拔" />
+        </view>
+        <view class="weui-cell__ft">
+          <view bindtap='getLocation' class="weui-vcode-btn">定位</view>
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">坡位</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input bindblur='slopePositionInput' value="{{currDetail.slopePosition}}" class="weui-input" placeholder="请输入坡位" />
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">坡向</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input bindblur='slopeDirectionInput' value="{{currDetail.slopeDirection}}" class="weui-input" placeholder="请输入坡向" />
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">树高（m）</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input bindblur='treeHeightInput' value="{{currDetail.treeHeight}}" class="weui-input" placeholder="请输入树高" />
+        </view>
+      </view>
+
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">树胸径（cm）</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input bindblur='treeRadiusInput' value="{{currDetail.treeRadius}}" class="weui-input" placeholder="请输入树胸径" />
+        </view>
+      </view>
+
+      <view class="weui-cells__title">描述</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <textarea class="weui-textarea" bindblur='descriptionInput' value="{{currDetail.description}}" placeholder="请输入描述（可选）" style="height: 3.3em" />
+                </view>
+            </view>
+        </view>
+    </view>
+
+
+      <view class="weui-cells">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <view class="weui-uploader">
+              <view class="weui-uploader__hd">
+                <view class="weui-uploader__title">图片上传</view>
+                <view class="weui-uploader__info">{{files.length}}/1</view>
+              </view>
+              <view class="weui-uploader__bd">
+                <view class="weui-uploader__files" id="uploaderFiles">
+                  <block wx:for="{{files}}" wx:key="*this">
+                    <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                      <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                    </view>
+                  </block>
+                </view>
+                <view class="weui-uploader__input-box">
+                  <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+
+    <view class="weui-flex submit-view">
+      <view class="weui-flex__item">
+        <button bindtap='saveMonitor' class="weui-btn" type="primary">保存</button>
+      </view>
+      <view class="weui-flex__item">
+        <button class="weui-btn" type="warn">重置</button>
+      </view>
+    </view>
+
+  </view>
+
+  <view hidden="{{showPage!==2}}">
+    <view wx:for="{{monitorDetailList}}" class="supervisor-list-box {{!item.isError?'active':''}}" wx:key="timeStr">
+      <view bindtap="deleteMonitorItem" data-index="{{index}}" class="close">X</view>
+      <image mode="aspectFill" src="{{item.picture}}"></image>
+
+      <view class="weui-flex">
+        <view class="weui-flex__item">保存时间：{{item.timeStr}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">项目：{{item.projectName}}</view>
+        <view class="weui-flex__item">监测点：{{item.monitorName}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">经度：{{item.longitude}}</view>
+        <view class="weui-flex__item">纬度：{{item.latitude}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">海拔：{{item.altitude}}</view>
+        <view class="weui-flex__item">人工编号：{{item.signNumber}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">坡位：{{item.slopePosition}}</view>
+        <view class="weui-flex__item">坡向：{{item.slopeDirection}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">树高：{{item.treeHeight}}</view>
+        <view class="weui-flex__item">树径：{{item.treeRadius}}</view>
+      </view>
+    </view>
+
+    <button wx:if="{{monitorDetailList.length>0}}" bindtap="upload" class="upload-btn weui-btn" type="primary">上传</button>
+    <view wx:if="{{monitorDetailList.length<=0}}">
+      目前没有已保存的记录，去新增记录吧
+    </view>
+  </view>
+
+  <view class="bottom-nav">
+    <view bindtap='switchPage' data-id="1" class="bottom-nav-item bottom-first {{showPage==1?'curr':''}}">新增</view>
+    <view bindtap='switchPage' data-id="2" class="bottom-nav-item {{showPage==2?'curr':''}}">已保存</view>
+  </view>
+</view>

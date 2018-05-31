@@ -171,3 +171,7 @@ page{
     text-align: left;
     font-size: 14px;
 }
+
+.weui-cells,.weui-flex__item{
+  font-size: 14px;
+}

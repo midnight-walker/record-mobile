@@ -1,0 +1,19 @@
+/* pages/monitorDetail/detail.wxss */
+.monitor-info{
+  background: #fff;
+  padding: 10px;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.submit-view .weui-flex__item{
+  padding: 20px;
+}
+
+.submit-view .weui-flex__item button{
+  font-size: 14px;
+}
+
+.upload-btn{
+  margin:20px 10px;
+}

@@ -1,4 +1,4 @@
-.container{
+/*.container{
   padding: 10px;
 }
 .section{
@@ -16,4 +16,4 @@
 }
 .detail{
   font-size: 12px;
-}
+}*/

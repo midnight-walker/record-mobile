@@ -12,7 +12,10 @@
     "pages/locationRecord/locationRecord",
     "pages/supervisorDetail/detail",
     "pages/supervisorDetail/mine",
-    "pages/supervisorDetail/map"
+    "pages/supervisorDetail/map",
+    "pages/monitorDetail/detail",
+    "pages/monitorDetail/mine",
+    "pages/monitorDetail/description"
   ],
   "window": {
     "backgroundTextStyle": "light",

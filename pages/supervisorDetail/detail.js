@@ -3,6 +3,7 @@ let { promiseRequest } = require('../../utils/util.js');
 const moment = require('../../utils/moment.js');
 const imgUploader = require('../../utils/uploadImage');
 var app = getApp();
+let businessTypes=['监理', '验收'];
 let defaultDetail=()=>{
   return {
     recordTypes: [],
@@ -23,6 +24,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    businessTypeName: businessTypes[0],
     userInfo:{},
     projectIndex: 0,
     supervisorIndex: 0,
@@ -48,6 +50,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let businessTypeName = businessTypes[options.ptype];
+    if (businessTypeName){
+      this.setData({
+        businessTypeName
+      });
+    }
     app.getUserInfo(userInfo=> {
       //更新数据
       this.setData({
@@ -93,9 +101,14 @@ Page({
       count: 1,
       sizeType: ['compressed'],
       success: (res) =>{
-        this.setData({
-          'currDetail.picture': res.tempFilePaths[0]
-        });
+        wx.saveFile({
+          tempFilePath: res.tempFilePaths[0],
+          success: (r)=> {
+            this.setData({
+              'currDetail.picture': r.savedFilePath
+            });
+          }
+        })
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
@@ -108,17 +121,21 @@ Page({
       count: 1,
       sizeType: ['compressed'],
       success: (res) => {
-        let path = res.tempFilePaths[0];
-        let supervisorDetailList = this.data.supervisorDetailList,
-          index = e.target.dataset.index,
-          supervisorDetail=supervisorDetailList[index];
+        wx.saveFile({
+          tempFilePath: res.tempFilePaths[0],
+          success: (r) => {
+            let supervisorDetailList = this.data.supervisorDetailList,
+              index = e.target.dataset.index,
+              supervisorDetail = supervisorDetailList[index];
 
-        if (supervisorDetail){
-          supervisorDetail.picture=path;
-        }
-        wx.setStorageSync('supervisorDetailList', supervisorDetailList);
-        this.setData({
-          supervisorDetailList
+            if (supervisorDetail) {
+              supervisorDetail.picture = r.savedFilePath;
+            }
+            wx.setStorageSync('supervisorDetailList', supervisorDetailList);
+            this.setData({
+              supervisorDetailList
+            })
+          }
         })
       },
       fail: function ({ errMsg }) {
@@ -194,6 +211,18 @@ Page({
       success: (res) =>{
         if (res.confirm) {
           let index = e.target.dataset.index, supervisorDetailList = this.data.supervisorDetailList;
+          console.log(supervisorDetailList[index].picture)
+          wx.getSavedFileList({
+            success: function (res) {
+              console.log(res);
+            }
+          })
+          wx.removeSavedFile({
+            filePath: supervisorDetailList[index].picture,
+            complete: function (res) {
+              console.log(res)
+            }
+          })
           supervisorDetailList.splice(index, 1);
           wx.setStorageSync('supervisorDetailList', supervisorDetailList);
           this.setData({
@@ -240,7 +269,7 @@ Page({
         isError = this.data.selectedTypes[0].type!==0;
       }
       if (!submitData.projectId || !submitData.supervisorId) {
-        reject('请先选输入监理点编号并查询！');
+        reject('请先选输入' + this.data.businessTypeName +'点编号并查询！');
       }
       if (submitData.picture === "") {
         reject('请先选择照片！');
@@ -358,7 +387,7 @@ Page({
     let supervisor = this.data.supervisorList.find(item => item.id === parseInt(e.detail.value));
     if(!supervisor){
       wx.showModal({
-        content: '未找到指定编号的监理点！',
+        content: '未找到指定编号的' + this.data.businessTypeName+'点！',
         showCancel: false
       })
       this.setData({

@@ -1,31 +1,44 @@
-<view class="container">
-  <view class="section">
-    <view class="section_title">监理</view>
-    <view class="flex-wrap">
-      <navigator class="detail" url="/pages/supervisorDetail/detail" open-type="navigate">松材线虫病除治质量监理</navigator>
-    </view>
-    <view class="flex-wrap">
-      <navigator class="detail" url="/pages/supervisorDetail/mine" open-type="navigate">提交记录</navigator>
-    </view>
-    <view class="flex-wrap">
-      <navigator class="detail" url="/pages/supervisorDetail/map" open-type="navigate">记录地图</navigator>
-    </view>
+
+<view class="page__bd">
+  <view class="weui-cells__title">监理</view>
+  <view class="weui-cells weui-cells_after-title">
+    <navigator url="/pages/supervisorDetail/detail?ptype=0" open-type="navigate" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">松材线虫病除治质量监理</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+    <navigator url="/pages/supervisorDetail/mine" open-type="navigate" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">提交记录</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+    <navigator url="/pages/supervisorDetail/map" open-type="navigate" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">记录地图</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
   </view>
-  <view class="section">
-    <view class="section_title">监测</view>
-    <view class="flex-wrap">
-      <view class="detail">监测（暂未开放）</view>
-    </view>
+
+
+  <view class="weui-cells__title">监测</view>
+  <view class="weui-cells weui-cells_after-title">
+    <navigator url="/pages/monitorDetail/detail?ptype=0" open-type="navigate" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">新增诱捕器</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+    <navigator url="/pages/monitorDetail/mine" open-type="navigate" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">提交记录</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
   </view>
-  <view class="section">
-    <view class="section_title">防治</view>
-    <view class="flex-wrap">
-      <view class="detail">防治（暂未开放）</view>
-    </view>
+
+  
+  <view class="weui-cells__title">验收</view>
+  <view class="weui-cells weui-cells_after-title">
+    <navigator url="/pages/supervisorDetail/detail?ptype=1" open-type="navigate" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">验收</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
   </view>
-  <view class="section_title"></view>
 </view>
 
 
-  <import src="../../widget/footer.wxml"/>
-  <template is="footer"/>
+<import src="../../widget/footer.wxml" />
+<template is="footer" />

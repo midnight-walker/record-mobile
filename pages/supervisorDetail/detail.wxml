@@ -56,7 +56,7 @@
       </picker>
     </view>-->
     <view class="location-content text-c">
-      <view class="section__title">监理点编号：</view>
+      <view class="section__title">{{businessTypeName}}点编号：</view>
       <input bindblur="getSupervisor" />
     </view>
     <view hidden='{{!selectSupervisor.region}}' class="supervisor-content supervisor-list-box">
@@ -158,7 +158,7 @@
         项目：{{item.projectName}}
       </view>
       <view class='line'>
-        监理点：{{item.supervisorName}}
+        {{businessTypeName}}点：{{item.supervisorName}}
       </view>
       <view class='line'>
         <span>经度：{{item.longitude}}</span>

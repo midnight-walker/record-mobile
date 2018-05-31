@@ -11,9 +11,29 @@
     </view>
 
     <view class="weui-cell weui-cell_switch">
-      <view class="weui-cell__bd">只看自己</view>
+      <view class="weui-cell__bd">监理员</view>
       <view class="weui-cell__ft">
-        <switch bindchange="switchData" checked="{{operator}}" />
+        <picker bindchange="memberChange" value="memberIndex" range-key="name" range="{{memberList}}">
+          <view class="picker">
+            {{memberList[memberIndex].name}}
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd">根据日期查询</view>
+      <view class="weui-cell__ft">
+        <switch bindchange="switchQueryByDate" checked="{{queryByDate}}" />
+      </view>
+    </view>
+
+    <view hidden='{{!queryByDate}}' class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd">上传时间</view>
+      <view class="weui-cell__ft">
+        <picker mode="date" value="{{date}}" bindchange="bindDateChange">
+          <view class="picker"> {{date}}</view>
+        </picker>
       </view>
     </view>
 
@@ -38,7 +58,7 @@
       </view>
       <view class='line'>
         <span>监理点：{{item.supervisor.id}}</span>
-        <span>上传人：{{item.member.wxname}}</span>
+        <span>上传人：{{item.member.name}}</span>
       </view>
       <view class='line'>
         <span>区县：{{item.supervisor.region}}</span>

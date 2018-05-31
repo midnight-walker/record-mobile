@@ -1,0 +1,102 @@
+<!--pages/monitorDetail/description.wxml-->
+
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-tab">
+      <view class="weui-navbar">
+        <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+          </view>
+        </block>
+        <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+      </view>
+      <view class="weui-tab__panel">
+
+        <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+          <view class="weui-cells__title">诱捕器信息</view>
+          <view hidden='{{!selectMonitor.id}}' style='background:#fff;padding:0 15px;'>
+            <view class="weui-flex">
+              <view class="weui-flex__item">系统编号：{{selectMonitor.id}}</view>
+              <view class="weui-flex__item">人工编号：{{selectMonitor.signNumber}}</view>
+            </view>
+          </view>
+
+          <view class="weui-cells__title">维护信息</view>
+          <view class="weui-cells weui-cells_after-title">
+
+            <view class="weui-cell weui-cell_switch">
+              <view class="weui-cell__bd">维护类型</view>
+              <view class="weui-cell__ft">
+                <picker bindchange="monitorStepChange" value="monitorTypeIndex" range-key="name" range="{{monitorSteps}}">
+                  <view class="picker">
+                    {{monitorSteps[monitorStepIndex].name}}
+                  </view>
+                </picker>
+              </view>
+            </view>
+
+            <view class="weui-cells" style='margin-top:0px'>
+              <view class="weui-cell">
+                <view class="weui-cell__bd">
+                  <view class="weui-uploader">
+                    <view class="weui-uploader__hd">
+                      <view class="weui-uploader__title">图片上传</view>
+                      <view class="weui-uploader__info">{{files.length}}/1</view>
+                    </view>
+                    <view class="weui-uploader__bd">
+                      <view class="weui-uploader__files" id="uploaderFiles">
+                        <block wx:for="{{files}}" wx:key="*this">
+                          <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                            <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                          </view>
+                        </block>
+                      </view>
+                      <view class="weui-uploader__input-box">
+                        <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+
+            <view class="weui-cells__title">描述</view>
+            <view class="weui-cells weui-cells_after-title">
+              <view class="weui-cell">
+                <view class="weui-cell__bd">
+                  <textarea class="weui-textarea" bindblur='descriptionInput' value="{{currDetail.description}}" placeholder="请输入描述" style="height: 3.3em" />
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <view class="weui-flex" style='margin:20px'>
+            <view class="weui-flex__item">
+              <button bindtap='saveMonitorDescription' class="weui-btn" type="primary">上传</button>
+            </view>
+          </view>
+
+        </view>
+
+        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+          <view wx:for="{{selectMonitor.monitor_detail_descriptions}}" class="supervisor-list-box active" wx:key="id">
+            <image mode="aspectFill" src="{{item.picture}}"></image>
+            <view class="weui-flex">
+              <view class="weui-flex__item">上传时间：{{item.createdTime}}</view>
+            </view>
+            <view class="weui-flex">
+              <view class="weui-flex__item">维护类型：{{item.stepName}}</view>
+            </view>
+            <view class="weui-flex">
+              <view class="weui-flex__item">描述：{{item.description}}</view>
+            </view>
+          </view>
+          <view class="tool-tip" wx:if="{{selectMonitor.monitor_detail_descriptions.length<=0}}">
+            暂无维护记录
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

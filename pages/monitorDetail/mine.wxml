@@ -1,0 +1,108 @@
+<!--pages/monitorDetail/mine.wxml-->
+<view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">监理点编号</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input class="weui-input" bindblur='filterData' placeholder="输入编号查询" />
+      </view>
+    </view>
+
+    <view class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd">监理员</view>
+      <view class="weui-cell__ft">
+        <picker bindchange="memberChange" value="memberIndex" range-key="name" range="{{memberList}}">
+          <view class="picker">
+            {{memberList[memberIndex].name}}
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd">根据日期查询</view>
+      <view class="weui-cell__ft">
+        <switch bindchange="switchQueryByDate" checked="{{queryByDate}}" />
+      </view>
+    </view>
+
+    <view hidden='{{!queryByDate}}' class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd">上传时间</view>
+      <view class="weui-cell__ft">
+        <picker mode="date" value="{{date}}" bindchange="bindDateChange">
+          <view class="picker"> {{date}}</view>
+        </picker>
+      </view>
+    </view>
+  </view>
+  <view class="monitor-list-wrap">
+    <view wx:for="{{monitorDetailList}}" class="supervisor-list-box active" wx:key="localTime">
+      <image mode="aspectFill" src="{{item.picture}}"></image>
+      <view class="weui-flex">
+        <view class="weui-flex__item">保存时间：{{item.savedTime}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">上传时间：{{item.createdTime}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">系统编号：{{item.id}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">监测点：{{item.monitor.id}}</view>
+        <view class="weui-flex__item">上传人：{{item.member.name}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">区县：{{item.monitor.region}}</view>
+        <view class="weui-flex__item">乡镇：{{item.monitor.station}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">村：{{item.monitor.village}}</view>
+        <view class="weui-flex__item">组、社：{{item.monitor.group}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">小班号：{{item.monitor.smallClass}}</view>
+        <view class="weui-flex__item">小地名：{{item.monitor.placeName}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">小班面积：{{item.monitor.smallClassArea}}</view>
+        <view class="weui-flex__item">树种组成：{{item.monitor.treeCompose}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">经度：{{item.longitude}}</view>
+        <view class="weui-flex__item">纬度：{{item.latitude}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">海拔：{{item.altitude}}</view>
+        <view class="weui-flex__item">人工编号：{{item.signNumber}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">坡度：{{item.slopePosition}}</view>
+        <view class="weui-flex__item">坡向：{{item.slopeDirection}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">树高：{{item.treeHeight}}</view>
+        <view class="weui-flex__item">树径：{{item.treeRadius}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">描述：{{item.description}}</view>
+      </view>
+      <view class="weui-flex">
+        <view class="weui-flex__item">
+          <button bindtap='viewLocation' data-longitude="{{item.longitude}}" data-latitude="{{item.latitude}}" data-altitude="{{item.altitude}}" class="weui-btn mini-btn" type="primary" size="mini">查看地图</button>
+        </view>
+        <view class="weui-flex__item">
+          <button bindtap='getWorm' data-monitor="{{item}}" type="primary" size="mini">后期维护</button>
+        </view>
+      </view>
+      
+    </view>
+    <view class="tool-tip" wx:if="{{monitorDetailList.length<=0}}">
+      暂无上传记录
+    </view>
+    <view class="tool-tip" wx:if="{{monitorDetailList.length>=100}}">
+      最多显示最近的100条记录
+    </view>
+  </view>
+</view>
