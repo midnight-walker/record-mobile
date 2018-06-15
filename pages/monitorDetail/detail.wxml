@@ -147,9 +147,6 @@
       <view class="weui-flex__item">
         <button bindtap='saveMonitor' class="weui-btn" type="primary">保存</button>
       </view>
-      <view class="weui-flex__item">
-        <button class="weui-btn" type="warn">重置</button>
-      </view>
     </view>
 
   </view>

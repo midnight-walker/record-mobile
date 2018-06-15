@@ -1,8 +1,177 @@
-<view class="classname">123</view>
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-tab">
+      <view class="weui-navbar">
+        <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item}}</view>
+          </view>
+        </block>
+        <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+      </view>
+      <view class="weui-tab__panel">
+        <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
 
-<view class="bottom-nav btn-area">
-  <navigator class="bottom-nav-item" url="/pages/index/index" open-type="redirect">首页</navigator>
-  <navigator class="bottom-nav-item" url="/pages/defence/defence" open-type="redirect">防治</navigator>
-  <navigator class="bottom-nav-item" url="/pages/supervisor/supervisor" open-type="redirect">监理</navigator>
-  <navigator class="bottom-nav-item" url="/pages/monitor/monitor" open-type="redirect">监测</navigator>
+          <view class="weui-cells__title">监测点信息</view>
+          <view class="weui-cells weui-cells_after-title">
+
+            <view hidden class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">所属项目编号</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input bindblur='projectIdInput' value="{{currDetail.projectId}}" class="weui-input" placeholder="请输入所属项目编号" />
+              </view>
+            </view>
+
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">区县</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input bindblur='regionInput' value="{{currDetail.region}}" class="weui-input" placeholder="请输入区县" />
+              </view>
+            </view>
+
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">乡镇</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input bindblur='stationInput' value="{{currDetail.station}}" class="weui-input" placeholder="请输入乡镇" />
+              </view>
+            </view>
+
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">村</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input bindblur='villageInput' value="{{currDetail.village}}" class="weui-input" placeholder="请输入村" />
+              </view>
+            </view>
+
+            <view class="weui-cell weui-cell_input weui-cell_vcode">
+              <view class="weui-cell__hd">
+                <view class="weui-label">社</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input bindblur='groupInput' value="{{currDetail.group}}" class="weui-input" placeholder="请输入社" />
+              </view>
+            </view>
+
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">小班</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input bindblur='smallClassInput' value="{{currDetail.smallClass}}" class="weui-input" placeholder="请输入小班" />
+              </view>
+            </view>
+
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">小班面积</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input bindblur='smallClassAreaInput' value="{{currDetail.smallClassArea}}" class="weui-input" placeholder="请输入小班面积" />
+              </view>
+            </view>
+
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">小地名</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input bindblur='placeNameInput' value="{{currDetail.placeName}}" class="weui-input" placeholder="请输入小地名" />
+              </view>
+            </view>
+
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">树种组成</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input bindblur='treeComposeInput' value="{{currDetail.treeCompose}}" class="weui-input" placeholder="请输入树种组成" />
+              </view>
+            </view>
+
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">林密度</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input bindblur='treeDensityInput' value="{{currDetail.treeDensity}}" class="weui-input" placeholder="请输入林密度" />
+              </view>
+            </view>
+
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">郁闭度</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input bindblur='crownDensityInput' value="{{currDetail.crownDensity}}" class="weui-input" placeholder="请输入郁闭度" />
+              </view>
+            </view>
+
+          </view>
+
+          <view class="weui-flex submit-view">
+            <view class="weui-flex__item" style='padding:20px;'>
+              <button bindtap='saveMonitor' class="weui-btn" type="primary">保存</button>
+            </view>
+          </view>
+
+        </view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+
+          <view class="weui-cells weui-cells_after-title">
+
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">小地名</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input class="weui-input" bindblur='getMonitor' placeholder="输入小地名" />
+              </view>
+            </view>
+
+          </view>
+
+          <view class="monitor-list-wrap">
+            <view wx:for="{{monitorList}}" class="supervisor-list-box active" wx:key="id">
+              <view class="weui-flex">
+                <view class="weui-flex__item">监测点：{{item.id}}</view>
+              </view>
+              <view class="weui-flex">
+                <view class="weui-flex__item">区县：{{item.region}}</view>
+                <view class="weui-flex__item">乡镇：{{item.station}}</view>
+              </view>
+              <view class="weui-flex">
+                <view class="weui-flex__item">村：{{item.village}}</view>
+                <view class="weui-flex__item">组、社：{{item.group}}</view>
+              </view>
+              <view class="weui-flex">
+                <view class="weui-flex__item">小班号：{{item.smallClass}}</view>
+                <view class="weui-flex__item">小地名：{{item.placeName}}</view>
+              </view>
+              <view class="weui-flex">
+                <view class="weui-flex__item">小班面积：{{item.smallClassArea}}</view>
+                <view class="weui-flex__item">树种组成：{{item.treeCompose}}</view>
+              </view>
+              <view class="weui-flex">
+                <view class="weui-flex__item">林密度：{{item.treeDensity}}</view>
+                <view class="weui-flex__item">郁闭度：{{item.crownDensity}}</view>
+              </view>
+
+            </view>
+            <view class="tool-tip" wx:if="{{monitorList.length>=100}}">
+              最多显示最近的100条记录
+            </view>
+          </view>
+
+        </view>
+      </view>
+    </view>
+  </view>
 </view>
